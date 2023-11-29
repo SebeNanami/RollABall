@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class PendulumBlock : MonoBehaviour
+public class BallController : MonoBehaviour
 {
-    public float Amplitude = 5f; //êUïù
-    public float Frequency = 1f; //ïpìx
-    private Vector3 startPos = Vector3.zero;
+    private Rigidbody ballRigidBody;
     private void Start()
     {
-        startPos = transform.position;
+        ballRigidBody = this.GetComponent<Rigidbody>();
+        var ballData = new BallData(5);
+        Debug.Log(ballData.GetHitPoint);//5
     }
-    void Update()
+    public void BallMove(Vector3 direction)
     {
-        transform.position = startPos + Vector3.forward * Amplitude * Mathf.Sin(Time.time * Frequency);
+        ballRigidBody.AddForce(direction);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Damage");
     }
 }
